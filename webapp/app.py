@@ -30,7 +30,8 @@ def index():
                 filepath = os.path.join(UPLOAD_DIR, filename)
                 file.save(filepath)
                 try:
-                    text = model_server.predict(filepath)  # Your existing logic
+                    text = model_server.predict(filepath)
+                    text = text.replace("|", "")  # Remove pipe symbols
                     results.append({"filename": filename, "text": text})
                 except Exception as e:
                     results.append({"filename": filename, "text": f"Error: {str(e)}"})
