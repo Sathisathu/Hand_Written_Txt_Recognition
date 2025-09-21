@@ -8,7 +8,7 @@ if __name__ == "__main__":
     from tqdm import tqdm
     from torch.cuda.amp import autocast, GradScaler
     import os
-
+ 
     # -------- Hyperparameters --------
     BATCH_SIZE = 16
     IMG_HEIGHT = 64
