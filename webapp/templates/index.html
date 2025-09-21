@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Handwriting Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Handwriting Recognition</h1>
+
+    <!-- Upload Form -->
+    <div class="card">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="fileInput" class="form-label">Upload Handwritten Image(s)</label>
+                <input type="file" class="form-control" id="fileInput" name="files" accept="image/*" multiple required>
+                <small class="text-muted">You can select multiple images.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Recognize</button>
+        </form>
+    </div>
+
+    <!-- Results -->
+    {% if results %}
+        {% for item in results %}
+        <div class="card mt-3">
+            <h5 class="card-title">{{ item.filename }}</h5>
+            <img src="{{ url_for('uploaded_file', filename=item.filename) }}" alt="{{ item.filename }}">
+            <p id="recognizedText_{{ loop.index }}" class="card-text">{{ item.text }}</p>
+            <button class="btn btn-secondary w-100 copyBtn" data-target="recognizedText_{{ loop.index }}">Copy to Clipboard</button>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const copyButtons = document.querySelectorAll(".copyBtn");
+    copyButtons.forEach(btn => {
+        btn.addEventListener("click", function() {
+            const targetId = btn.getAttribute("data-target");
+            const text = document.getElementById(targetId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerText = "Copied!";
+                setTimeout(() => btn.innerText = "Copy to Clipboard", 2000);
+            }).catch(err => {
+                alert("Failed to copy text: " + err);
+            });
+        });
+    });
+});
+</script>
+</body>
+</html>
