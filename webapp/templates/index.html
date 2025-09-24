@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- ✅ ADD THIS LINE for responsive design -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Handwriting Recognition</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<style>
-img { max-width: 100%; height: auto; margin-top: 10px; }
-</style>
+<!-- Removed the redundant inline style for img as it's already in style.css -->
 </head>
 <body>
 <div class="container py-4">

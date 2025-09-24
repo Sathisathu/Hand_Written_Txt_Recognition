@@ -6,7 +6,7 @@ import torchvision.transforms as T
 
 
 class IAMDataset(Dataset):
-    def __init__(self, images_dir="data/lines", labels_file="data/labels.txt", img_height=64, max_width=None):
+    def __init__(self, images_dir="data/images", labels_file="data/labels.txt", img_height=64, max_width=None):
         """
         Args:
             images_dir: Root folder containing IAM line images
