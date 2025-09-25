@@ -8,10 +8,12 @@ scikit-learn==1.7.2
 tensorflow==2.20.0
 tqdm==4.67.1
 
-#For CPU
-#torch==2.8.0
-#torchvision==0.23.0
-#torchaudio==2.8.0
+# Pythorch for NVIDIA GPU (Recomended for Trainning Model)
+#pip install torch==2.8.0+cu126 torchvision==0.23.0+cu126 torchaudio==2.8.0+cu126 --index-url https://download.pytorch.org/whl/cu126
+
+#For CPU (Recomended for Running this Project if You are not training)
+#pip install torch==2.8.0+cpu torchvision==0.23.0+cpu torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+
 
 Flask>=2.0
 Pillow
