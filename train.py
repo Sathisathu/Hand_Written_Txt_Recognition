@@ -8,8 +8,8 @@ if __name__ == "__main__":
     from tqdm import tqdm
     from torch.cuda.amp import autocast, GradScaler
     import os
- 
-    # -------- Hyperparameters --------
+
+
     BATCH_SIZE = 16
     IMG_HEIGHT = 64
     MAX_IMG_WIDTH = 256
@@ -18,11 +18,11 @@ if __name__ == "__main__":
     SAVE_DIR = "checkpoints"
     os.makedirs(SAVE_DIR, exist_ok=True)
 
-    # -------- Device --------
+
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Using device:", DEVICE)
 
-    # -------- Dataset & DataLoader --------
+
     dataset = IAMDataset(
         images_dir="data/lines",
         labels_file="data/labels.txt",
@@ -33,16 +33,16 @@ if __name__ == "__main__":
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True,
                             collate_fn=collate_fn, num_workers=4)
 
-    # -------- Model --------
+
     num_classes = len(dataset.chars) + 1
     model = HTRModel(num_classes=num_classes).to(DEVICE)
 
-    # -------- Loss & Optimizer --------
+
     ctc_loss = nn.CTCLoss(blank=0, zero_infinity=True)
     optimizer = optim.Adam(model.parameters(), lr=LR)
     scaler = GradScaler()
 
-    # -------- Training Loop --------
+
     best_loss = float('inf')
 
     for epoch in range(EPOCHS):
@@ -71,14 +71,14 @@ if __name__ == "__main__":
         avg_loss = total_loss / len(dataloader)
         print(f"\nEpoch [{epoch+1}/{EPOCHS}] Average Loss: {avg_loss:.4f}")
 
-        # Save best model
+
         if avg_loss < best_loss:
             best_loss = avg_loss
             save_path = os.path.join(SAVE_DIR, f"htr_model_best.pth")
             torch.save(model.state_dict(), save_path)
             print(f"Saved new best model: {save_path}")
 
-        # Optional: save every 5 epochs
+
         if (epoch + 1) % 5 == 0:
             save_path = os.path.join(SAVE_DIR, f"htr_model_epoch{epoch+1}.pth")
             torch.save(model.state_dict(), save_path)
