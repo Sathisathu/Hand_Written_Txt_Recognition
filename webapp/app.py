@@ -8,9 +8,8 @@ UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # Needed for session
+app.secret_key = "supersecretkey"
 
-# Serve uploaded images
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_DIR, filename)
@@ -31,7 +30,7 @@ def index():
                 file.save(filepath)
                 try:
                     text = model_server.predict(filepath)
-                    text = text.replace("|", "")  # Remove pipe symbols
+                    text = text.replace("|", "")
                     results.append({"filename": filename, "text": text})
                 except Exception as e:
                     results.append({"filename": filename, "text": f"Error: {str(e)}"})
@@ -40,7 +39,7 @@ def index():
 
     # GET request
     results = session.get('results', None)
-    session.pop('results', None)  # Clear after reading
+    session.pop('results', None)
     return render_template("index.html", results=results)
 
 @app.route("/predict", methods=["POST"])

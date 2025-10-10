@@ -1,4 +1,3 @@
-# webapp/model_server.py
 import torch
 from PIL import Image
 import torchvision.transforms as T
@@ -15,7 +14,6 @@ class ModelServer:
     def __init__(self):
         print("Initializing ModelServer...")
 
-        # Load dataset (for character mappings)
         dataset = IAMDataset(
             images_dir="data/lines",
             labels_file="data/labels.txt",
@@ -24,9 +22,9 @@ class ModelServer:
         )
         self.idx_to_char = dataset.idx_to_char
         self.blank_idx = 0
-        num_classes = len(dataset.chars) + 1  # +1 for CTC blank
+        num_classes = len(dataset.chars) + 1
 
-        # Load trained model
+
         self.model = HTRModel(num_classes=num_classes).to(DEVICE)
         ckpt_path = "checkpoints/htr_model_best.pth"
         if not os.path.exists(ckpt_path):
@@ -34,7 +32,6 @@ class ModelServer:
         self.model.load_state_dict(torch.load(ckpt_path, map_location=DEVICE))
         self.model.eval()
 
-        # Define preprocessing transform
         self.transform = T.Compose([
             T.ToTensor(),
             T.Normalize((0.5,), (0.5,))
@@ -47,7 +44,6 @@ class ModelServer:
         new_w = min(new_w, max_width)
         img = img.resize((new_w, img_height))
 
-        # Pad image to max_width
         new_img = Image.new("L", (max_width, img_height), color=255)
         new_img.paste(img, (0, 0))
 
@@ -73,5 +69,4 @@ class ModelServer:
         predicted_text = text.replace("|", " ")
         return predicted_text
 
-# Create a global instance for Flask app
 model_server = ModelServer()
