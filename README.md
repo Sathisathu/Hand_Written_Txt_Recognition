@@ -139,18 +139,6 @@ If you want to train the model from scratch on the IAM dataset:
 -   **Model Architecture**: To experiment with the model, you can modify the CNN or LSTM layers in `model/htr_model.py`.
 -   **Dataset**: To train on a different dataset, you will need to create a new data loader by adapting the `data_loader/dataset.py` script to your dataset's format.
 
-## 🤝 Contributing
-
-Contributions are welcome! If you have suggestions for improvements, please feel free to fork the repository, create a new feature branch, and open a pull request.
-
-1.  **Fork** the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a **Pull Request**
-
-
-
 ## 🙏 Acknowledgments
 
 -   This project relies on the excellent **IAM Handwriting Database**.
